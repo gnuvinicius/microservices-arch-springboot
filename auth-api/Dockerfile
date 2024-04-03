@@ -1,0 +1,30 @@
+FROM maven:3.9.4-amazoncorretto-17-debian AS build-env
+
+ARG USER_HOME_DIR="/root"
+ENV MAVEN_CONFIG "$USER_HOME_DIR/.m2"
+ENV APP_NAME auth-api-1.0.0
+
+ENV JWT_SECRET pdkBtv9driN4lSGTNeOfBK6p5IC6iz
+ENV POSTGRES_HOST postgres
+ENV POSTGRES_DATABASE garage-auth
+ENV POSTGRES_USER postgres
+ENV POSTGRES_PASSWD 2AkByM4NfHFkeJz
+
+WORKDIR /app
+
+COPY ./target/${APP_NAME}.jar /app/${APP_NAME}.jar
+
+FROM eclipse-temurin:17-jre-alpine
+
+ENV JWT_SECRET pdkBtv9driN4lSGTNeOfBK6p5IC6iz
+ENV POSTGRES_HOST postgres
+ENV POSTGRES_DATABASE garage-auth
+ENV POSTGRES_USER postgres
+ENV POSTGRES_PASSWD 2AkByM4NfHFkeJz
+
+WORKDIR /app
+COPY --from=build-env /app/auth-api-1.0.0.jar .
+
+EXPOSE 8080
+
+ENTRYPOINT ["java", "-jar", "auth-api-1.0.0.jar" ]

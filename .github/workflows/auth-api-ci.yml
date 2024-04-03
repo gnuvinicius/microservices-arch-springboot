@@ -16,4 +16,5 @@ jobs:
           distribution: 'temurin'
           architecture: x64
       - name: Run the maven package
+        working-directory: ./auth-api
         run: mvn clean package

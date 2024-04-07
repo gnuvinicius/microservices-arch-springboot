@@ -6,7 +6,7 @@
 
 	<groupId>com.garage</groupId>
 	<artifactId>auth-api</artifactId>
-	<version>1.0.1</version>
+	<version>1.0.2</version>
 	<name>auth</name>
 	<description>garage auth api</description>
 

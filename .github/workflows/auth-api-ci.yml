@@ -15,6 +15,9 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
           architecture: x64
+      - name: Set version package
+        working-directory: ./auth-api
+        run: mvn versions:set -DnewVersion=${GITHUB_REF#refs/tags/}
       - name: Run the maven package
         working-directory: ./auth-api
-        run: mvn clean package
+        run: mvn -DskipTest clean package

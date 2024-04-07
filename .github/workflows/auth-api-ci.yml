@@ -1,9 +1,9 @@
 name: Auth-api project
 run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
 on:
-  push:
-    branches:
-      - main
+  create:
+    tags:
+      - v*
 jobs:
   Explore-GitHub-Actions:
     runs-on: ubuntu-latest

@@ -26,4 +26,7 @@ $ Done! kubectl is now configured to use "k8s-garage474" cluster and "default" n
 minikube tunnel
 minikube service auth-api --url
 minikube dashboard -p k8s-garage474
+
+
+minikube ip //pegar IP do node
 ```

@@ -36,6 +36,11 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       - name: Build and push
-        run: |
-          docker build --build-arg APP_NAME=auth-api-${GITHUB_REF#refs/tags/} --no-cache -t auth-api:${GITHUB_REF#refs/tags/} .
-          docker push gnuvinicius/auth-api:${GITHUB_REF#refs/tags/}
+        uses: docker/build-push-action@v5
+        with:
+          push: true
+          tags: gnuvinicius/auth-api:${GITHUB_REF#refs/tags/}
+          build-args: APP_NAME=auth-api-${GITHUB_REF#refs/tags/}
+        # run: |
+        #   docker build --build-arg APP_NAME=auth-api-${GITHUB_REF#refs/tags/} --no-cache -t auth-api:${GITHUB_REF#refs/tags/} .
+        #   docker push gnuvinicius/auth-api:${GITHUB_REF#refs/tags/}

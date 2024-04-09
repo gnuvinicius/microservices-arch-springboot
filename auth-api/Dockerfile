@@ -1,11 +1,11 @@
-FROM maven:3.9.4-amazoncorretto-17-debian AS build-env
+# FROM maven:3.9.4-amazoncorretto-17-debian AS build-env
 
-ARG APP_NAME
-ARG USER_HOME_DIR="/root"
-ENV MAVEN_CONFIG "$USER_HOME_DIR/.m2"
+# ARG APP_NAME
+# ARG USER_HOME_DIR="/root"
+# ENV MAVEN_CONFIG "$USER_HOME_DIR/.m2"
 
-WORKDIR /app
-COPY ./target/${APP_NAME}.jar /app/${APP_NAME}.jar
+# WORKDIR /app
+# COPY ./target/${APP_NAME}.jar /app/${APP_NAME}.jar
 
 FROM eclipse-temurin:17-jre-alpine
 
@@ -17,7 +17,7 @@ ENV POSTGRES_USER postgres
 ENV POSTGRES_PASSWD 2AkByM4NfHFkeJz
 
 WORKDIR /app
-COPY --from=build-env /app/${APP_NAME}.jar app.jar
+COPY ${APP_NAME}.jar /app/app.jar
 
 EXPOSE 8080
 

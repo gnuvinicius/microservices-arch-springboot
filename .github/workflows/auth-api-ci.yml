@@ -51,6 +51,6 @@ jobs:
       - name: Build and push Docker image
         working-directory: ./auth-api
         run: |
-          docker build --build-arg APP_NAME=auth-api-${{ steps.branch_name.outputs.SOURCE_TAG }} -t auth-api:${{ steps.branch_name.outputs.SOURCE_TAG }} .
+          docker build --build-arg APP_NAME=auth-api-${{ steps.branch_name.outputs.SOURCE_TAG }} --tag gnuvinicius/auth-api:${{ steps.branch_name.outputs.SOURCE_TAG }} .
           echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
           docker push gnuvinicius/auth-api:${{ steps.branch_name.outputs.SOURCE_TAG }}

@@ -17,7 +17,7 @@ ENV POSTGRES_USER postgres
 ENV POSTGRES_PASSWD 2AkByM4NfHFkeJz
 
 WORKDIR /app
-COPY /app/${APP_NAME}.jar app.jar
+COPY ./${APP_NAME}.jar /app/app.jar
 
 EXPOSE 8080
 

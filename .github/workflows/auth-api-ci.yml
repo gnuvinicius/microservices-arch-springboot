@@ -46,8 +46,8 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: auth-api
-      - name: Copy downloaded artifacts to . for Dockerfile
-        run: cp -av auth-api-${{ steps.branch_name.outputs.SOURCE_TAG }}.jar ./auth-api/target/
+      # - name: Copy downloaded artifacts to . for Dockerfile
+        # run: cp -av auth-api-${{ steps.branch_name.outputs.SOURCE_TAG }}.jar ./auth-api/target/
       - name: Build and push Docker image
         working-directory: ./auth-api
         run: |

@@ -38,9 +38,11 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v5
         with:
+          working-directory: ./auth-api
+          file: ./Dockerfile
           push: true
-          tags: gnuvinicius/auth-api:${{ steps.branch_name.outputs.SOURCE_TAG }}
-          build-args: APP_NAME=auth-api-${{ steps.branch_name.outputs.SOURCE_TAG }}
+          tags: gnuvinicius/auth-api:${{ steps.meta.outputs.tags }}
+          build-args: APP_NAME=auth-api-${{ steps.meta.outputs.tags }}
         # run: |
         #   docker build --build-arg APP_NAME=auth-api-${GITHUB_REF#refs/tags/} --no-cache -t auth-api:${GITHUB_REF#refs/tags/} .
         #   docker push gnuvinicius/auth-api:${GITHUB_REF#refs/tags/}

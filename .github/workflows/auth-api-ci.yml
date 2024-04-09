@@ -41,8 +41,7 @@ jobs:
           working-directory: ./auth-api
           file: ./Dockerfile
           push: true
-          tags: gnuvinicius/auth-api:${{ env.TAG }}
-          build-args: APP_NAME=auth-api-${{ env.TAG }}
+          build-args: APP_NAME=auth-api-${{ steps.vars.outputs.tag }}
         # run: |
         #   docker build --build-arg APP_NAME=auth-api-${GITHUB_REF#refs/tags/} --no-cache -t auth-api:${GITHUB_REF#refs/tags/} .
         #   docker push gnuvinicius/auth-api:${GITHUB_REF#refs/tags/}

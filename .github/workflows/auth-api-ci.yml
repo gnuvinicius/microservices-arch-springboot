@@ -30,9 +30,8 @@ jobs:
       - name: Upload math result for job 1
         uses: actions/upload-artifact@v4
         with:
-          working-directory: ./auth-api
-          name: auth-api.jar
-          path: ./target/auth-api-${{steps.branch_name.outputs.SOURCE_TAG}}.jar
+          name: auth-api
+          path: ./auth-api/target/auth-api-${{steps.branch_name.outputs.SOURCE_TAG}}.jar
 
   push_to_registry:
     needs: maven_build

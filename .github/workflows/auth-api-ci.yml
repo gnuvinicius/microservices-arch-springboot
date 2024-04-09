@@ -31,20 +31,26 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: auth-api
-          path: ./auth-api/target/auth-api-${{steps.branch_name.outputs.SOURCE_TAG}}.jar
+          path: ./auth-api/target/auth-api-${{ steps.branch_name.outputs.SOURCE_TAG }}.jar
 
   push_to_registry:
     needs: maven_build
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Get the repository name
-        run: echo "REPO_NAME=$(echo '${{ github.repository }}' | awk -F '/' '{print $2}')" >> $GITHUB_ENV
-      - name: Get the tag
-        run: echo "TAG=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
+      - name: Branch name
+        id: branch_name
+        run: |
+          echo ::set-output name=SOURCE_TAG::${GITHUB_REF#refs/tags/}
+      - name: Download a single artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: auth-api
+      - name: Copy downloaded artifacts to . for Dockerfile
+        run: cp -av ./auth-api/target/ .
       - name: Build and push Docker image
         working-directory: ./auth-api
         run: |
-          docker build --build-arg APP_NAME=auth-api-${{env.TAG}} --no-cache -t auth-api:${{env.TAG}} .
+          docker build --build-arg APP_NAME=auth-api-${{ steps.branch_name.outputs.SOURCE_TAG }} --no-cache -t auth-api:${{ steps.branch_name.outputs.SOURCE_TAG }} .
           echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
-          docker push gnuvinicius/auth-api:${{env.TAG}}
+          docker push gnuvinicius/auth-api:${{ steps.branch_name.outputs.SOURCE_TAG }}

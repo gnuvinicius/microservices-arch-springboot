@@ -37,6 +37,7 @@ jobs:
     - name: Get the tag
       run: echo "TAG=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
     - name: Build and push Docker image
+      working-directory: ./auth-api
       env:
         DOCKER_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
         DOCKER_PASSWORD: ${{ secrets.DOCKERHUB_TOKEN }}

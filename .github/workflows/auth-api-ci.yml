@@ -15,9 +15,11 @@ jobs:
           java-version: "17"
           distribution: "temurin"
           architecture: x64
+      - name: Get the tag
+        run: echo "TAG=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
       - name: Set version package
         working-directory: ./auth-api
-        run: mvn versions:set -DnewVersion=${GITHUB_REF#refs/tags/}
+        run: mvn versions:set -DnewVersion=${{env.TAG}}
       - name: Run the maven package
         working-directory: ./auth-api
         run: mvn -DskipTest clean package
@@ -25,23 +27,20 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: auth-api.jar
-          path: auth-api-${GITHUB_REF#refs/tags/}.jar
+          path: auth-api-${{env.TAG}}.jar
 
   push_to_registry:
     needs: maven_build
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
-    - name: Get the repository name
-      run: echo "REPO_NAME=$(echo '${{ github.repository }}' | awk -F '/' '{print $2}')" >> $GITHUB_ENV
-    - name: Get the tag
-      run: echo "TAG=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
-    - name: Build and push Docker image
-      working-directory: ./auth-api
-      env:
-        DOCKER_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
-        DOCKER_PASSWORD: ${{ secrets.DOCKERHUB_TOKEN }}
-      run: |
-        docker build --build-arg APP_NAME=auth-api-${{env.TAG}} --no-cache -t auth-api:${{env.TAG}} .
-        echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
-        docker push gnuvinicius/auth-api:${{env.TAG}}
+      - uses: actions/checkout@v3
+      - name: Get the repository name
+        run: echo "REPO_NAME=$(echo '${{ github.repository }}' | awk -F '/' '{print $2}')" >> $GITHUB_ENV
+      - name: Get the tag
+        run: echo "TAG=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
+      - name: Build and push Docker image
+        working-directory: ./auth-api
+        run: |
+          docker build --build-arg APP_NAME=auth-api-${{env.TAG}} --no-cache -t auth-api:${{env.TAG}} .
+          echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
+          docker push gnuvinicius/auth-api:${{env.TAG}}

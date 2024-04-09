@@ -21,30 +21,26 @@ jobs:
       - name: Run the maven package
         working-directory: ./auth-api
         run: mvn -DskipTest clean package
+      - name: Upload math result for job 1
+        uses: actions/upload-artifact@v4
+        with:
+          name: auth-api.jar
+          path: auth-api-${GITHUB_REF#refs/tags/}.jar
 
   push_to_registry:
     needs: maven_build
     runs-on: ubuntu-latest
     steps:
-      - name: Check out the repo
-        uses: actions/checkout@v4
-      - name: Log in to Docker Hub
-        uses: docker/login-action@f4ef78c080cd8ba55a85445d5b36e214a81df20a
-        with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
-      - name: Extract metadata (tags, labels) for Docker
-        id: meta
-        uses: docker/metadata-action@9ec57ed1fcdbf14dcef7dfbe97b2010124a938b7
-        with:
-          images: gnuvinicius/auth-api
-      - name: Build and push Docker image
-        uses: docker/build-push-action@3b5e8027fcad23fda98b2e3ac259d8d67585f671
-        with:
-          file: ./auth-api/Dockerfile
-          push: true
-          tags: ${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
-        # run: |
-        #   docker build --build-arg APP_NAME=auth-api-${GITHUB_REF#refs/tags/} --no-cache -t auth-api:${GITHUB_REF#refs/tags/} .
-        #   docker push gnuvinicius/auth-api:${GITHUB_REF#refs/tags/}
+    - uses: actions/checkout@v3
+    - name: Get the repository name
+      run: echo "REPO_NAME=$(echo '${{ github.repository }}' | awk -F '/' '{print $2}')" >> $GITHUB_ENV
+    - name: Get the tag
+      run: echo "TAG=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
+    - name: Build and push Docker image
+      env:
+        DOCKER_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+        DOCKER_PASSWORD: ${{ secrets.DOCKERHUB_TOKEN }}
+      run: |
+        docker build --build-arg APP_NAME=auth-api-${{env.TAG}} --no-cache -t auth-api:${{env.TAG}} .
+        echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
+        docker push gnuvinicius/auth-api:${{env.TAG}}

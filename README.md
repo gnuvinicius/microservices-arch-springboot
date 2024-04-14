@@ -30,3 +30,10 @@ minikube dashboard -p k8s-garage474
 
 minikube ip //pegar IP do node
 ```
+
+#### comandos do kind
+
+```
+kind create cluster --config kind-config.yaml
+
+```

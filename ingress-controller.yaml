@@ -7,14 +7,14 @@ spec:
     - http:
         paths:
           - pathType: Prefix
-            path: "/auth-api"
+            path: /auth
             backend:
               service:
                 name: auth-service
                 port:
                   number: 8080
           - pathType: Prefix
-            path: "/kbn-api"
+            path: /kbn
             backend:
               service:
                 name: kbn-service

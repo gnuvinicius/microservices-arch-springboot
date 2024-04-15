@@ -17,13 +17,13 @@ import com.garage.auth.infraestructure.api.auth.dtos.UserLoginRequestDto;
 
 @RestController
 @Validated
-@RequestMapping(value = "/api/v1/auth")
+@RequestMapping(value = "/auth/api/v1")
 public class AuthController {
 
 	@Autowired
 	private IAuthService service;
 
-	@PostMapping
+	@PostMapping(value = "login")
 	public ResponseEntity<?> auth(@RequestBody UserLoginRequestDto dto) throws AuthenticationException {
 		return ResponseEntity.ok(service.auth(dto));
 	}

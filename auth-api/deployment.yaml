@@ -27,12 +27,9 @@ kind: Service
 apiVersion: v1
 metadata:
   name: auth-service
-  labels:
-    run: auth-service
 spec:
   selector:
     app: auth-api
   ports:
     - port: 8080
       protocol: TCP
-

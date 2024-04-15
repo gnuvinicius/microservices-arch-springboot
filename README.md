@@ -37,3 +37,6 @@ minikube ip //pegar IP do node
 kind create cluster --config kind-config.yaml
 
 ```
+
+ver log do ingress-nginx
+kubectl logs -n ingress-nginx -l app.kubernetes.io/name=ingress-nginx -f

@@ -7,7 +7,7 @@ spec:
     - http:
         paths:
           - pathType: Prefix
-            path: /authapi
+            path: "/auth-api"
             backend:
               service:
                 name: auth-service

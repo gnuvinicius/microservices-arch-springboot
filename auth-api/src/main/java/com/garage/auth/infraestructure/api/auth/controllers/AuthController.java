@@ -17,7 +17,7 @@ import com.garage.auth.infraestructure.api.auth.dtos.UserLoginRequestDto;
 
 @RestController
 @Validated
-@RequestMapping(value = "/auth")
+@RequestMapping(value = "/api/v1/auth")
 public class AuthController {
 
 	@Autowired

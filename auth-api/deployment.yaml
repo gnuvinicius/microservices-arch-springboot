@@ -15,6 +15,7 @@ spec:
       containers:
         - name: auth-api
           image: gnuvinicius/auth-api:staging
+          imagePullPolicy: Always
           resources:
             limits:
               memory: "512Mi"
@@ -26,9 +27,12 @@ kind: Service
 apiVersion: v1
 metadata:
   name: auth-service
+  labels:
+    run: auth-service
 spec:
   selector:
     app: auth-api
   ports:
     - port: 8080
+      protocol: TCP
 

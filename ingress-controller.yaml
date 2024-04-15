@@ -6,10 +6,10 @@ spec:
   rules:
     - http:
         paths:
-          - backend:
+          - pathType: Prefix
+            path: /authapi
+            backend:
               service:
                 name: auth-service
                 port:
                   number: 8080
-            pathType: Prefix
-            path: "/auth"

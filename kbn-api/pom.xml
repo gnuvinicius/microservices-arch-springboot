@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.garage</groupId>
 	<artifactId>kbn</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>staging</version>
 	<name>kbn</name>
 	<description>Demo project for Spring Boot</description>
 	<properties>

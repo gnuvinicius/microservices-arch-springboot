@@ -25,7 +25,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: kbn-api
-          path: ./kbn-api/target/kbn-api-staging.jar
+          path: ./kbn-api/target/kbn-staging.jar
 
   push_to_registry:
     needs: maven_build
@@ -38,10 +38,10 @@ jobs:
         with:
           name: kbn-api
       - name: Copy downloaded artifacts to . for Dockerfile
-        run: cp -av kbn-api-staging.jar ./kbn-api/
+        run: cp -av kbn-staging.jar ./kbn-api/
       - name: Build and push Docker image
         working-directory: ./kbn-api
         run: |
-          docker build --build-arg APP_NAME=kbn-api-staging --tag gnuvinicius/kbn-api:staging .
+          docker build --build-arg APP_NAME=kbn-staging --tag gnuvinicius/kbn-api:staging .
           echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
           docker push gnuvinicius/kbn-api:staging

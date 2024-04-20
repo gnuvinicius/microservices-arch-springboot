@@ -1,5 +1,5 @@
 name: "[HML] Auth-api project"
-run-name: Auth-api release Staging
+
 on:
   push:
     branches:

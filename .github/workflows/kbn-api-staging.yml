@@ -20,7 +20,7 @@ jobs:
         run: mvn versions:set -DnewVersion=staging
       - name: Run the maven package
         working-directory: ./kbn-api
-        run: mvn -DskipTest clean package
+        run: mvn -DskipTests clean package
       - name: Upload 
         uses: actions/upload-artifact@v4
         with:

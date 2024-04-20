@@ -14,7 +14,10 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.filter.OncePerRequestFilter;
 
+import com.garage.kbn.config.RequestAttr;
+
 import jakarta.servlet.FilterChain;
+import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -22,6 +25,8 @@ import jakarta.servlet.http.HttpServletResponse;
 @Service
 public class AuthTokenFilter extends OncePerRequestFilter  {
 
+	@Autowired
+	private ServletContext servletContext;
 	@Autowired
 	private TokenService tokenService;
 
@@ -33,12 +38,10 @@ public class AuthTokenFilter extends OncePerRequestFilter  {
 
 		if (token != null) {
 			var result = tokenService.validateToken(token);
+			servletContext.setAttribute("requestAtt", new RequestAttr(result.get("tenantId"), result.get("userId")));
 			
 			var auth = new UsernamePasswordAuthenticationToken(result.get("email"), null, getAuthorities(result.get("role")));
 			SecurityContextHolder.getContext().setAuthentication(auth);
-
-			request.setAttribute("tenantId", result.get("tenantId"));
-			request.setAttribute("userId", result.get("userId"));
 			filter.doFilter(request, response);
 		}
 	}

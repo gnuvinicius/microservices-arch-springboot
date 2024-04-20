@@ -22,8 +22,6 @@ import jakarta.servlet.http.HttpServletRequest;
 @RequestMapping(value = "/kbn/api/v1")
 public class KbnResource {
 
-  private static final String TENANT_ID = "tenantId";
-  private static final String USER_ID = "userId";
   @Autowired
   private ProjetoService projetoService;
 
@@ -35,17 +33,11 @@ public class KbnResource {
 
   @PostMapping("/projetos")
   @PreAuthorize("hasRole('USER')")
-  public ResponseEntity<?> cadastraProjeto(HttpServletRequest request, @RequestBody ProjetoDto dto)
+  public ResponseEntity<?> cadastraProjeto(@RequestBody ProjetoDto dto)
       throws URISyntaxException {
 
-    if (request.getAttribute(TENANT_ID) != null && request.getAttribute(USER_ID) != null) {
-      String tenantId = request.getAttribute(TENANT_ID).toString();
-      String userId = request.getAttribute("userId").toString();
-      Projeto entity = projetoService.cadastraProjeto(dto, tenantId, userId);
+      Projeto entity = projetoService.cadastraProjeto(dto);
       return ResponseEntity.created(new URI(entity.getId().toString())).build();
-    } else {
-      return ResponseEntity.badRequest().build();
-    }
   }
 
 }

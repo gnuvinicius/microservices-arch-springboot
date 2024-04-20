@@ -5,6 +5,6 @@ import com.garage.kbn.resources.dto.ProjetoDto;
 
 public interface ProjetoService {
 
-  Projeto cadastraProjeto(ProjetoDto dto, String tenantId, String userId);
+  Projeto cadastraProjeto(ProjetoDto dto);
 
 }

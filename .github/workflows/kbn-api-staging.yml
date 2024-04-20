@@ -1,27 +1,34 @@
-name: Kbn-api project
-run-name: Kbn-api release Staging
+name: KBN API Project
+# run-name: KBN release Staging
 on:
-  push:
-    branches:
-      - "develop"
+  workflow_dispatch: 
+  # push:
+  #   branches:
+  #     - "develop"
+
 jobs:
   maven_build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - name: checkout
+        uses: actions/checkout@v4
+      
       - name: Set up JDK 17 for x64
         uses: actions/setup-java@v4
         with:
           java-version: "17"
           distribution: "temurin"
           architecture: x64
+      
       - name: Set version package
         working-directory: ./kbn-api
         run: mvn versions:set -DnewVersion=staging
+      
       - name: Run the maven package
         working-directory: ./kbn-api
         run: mvn -DskipTests clean package
-      - name: Upload 
+
+      - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
           name: kbn-api
@@ -32,13 +39,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-        name: Branch name
+        name: checkout
+      
       - name: Download a single artifact
         uses: actions/download-artifact@v4
         with:
           name: kbn-api
+      
       - name: Copy downloaded artifacts to . for Dockerfile
         run: cp -av kbn-api-staging.jar ./kbn-api/
+      
       - name: Build and push Docker image
         working-directory: ./kbn-api
         run: |

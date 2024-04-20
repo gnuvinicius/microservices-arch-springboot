@@ -1,4 +1,4 @@
-package com.garage.auth.config.security;
+package com.garage.kbn.config.security;
 
 import java.util.Arrays;
 import java.util.List;
@@ -8,9 +8,9 @@ import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -26,16 +26,8 @@ import org.springframework.web.filter.CorsFilter;
 
 @Configuration
 @EnableWebSecurity
+@EnableMethodSecurity(prePostEnabled = true)
 public class SecurityConfig {
-
-
-	private static final String[] AUTH_WHITE_LIST = {
-			"/v3/api-docs/**",
-			"/swagger-ui/**",
-			"/v2/api-docs/**",
-			"/swagger-resources/**",
-			"/actuator/health"
-	};
 
 	@Autowired
 	JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
@@ -59,11 +51,6 @@ public class SecurityConfig {
 				.csrf(AbstractHttpConfigurer::disable)
 				.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 				.authorizeHttpRequests(authorize -> authorize
-						.requestMatchers("/auth/**").permitAll()
-						.requestMatchers(AUTH_WHITE_LIST).permitAll()
-						.requestMatchers(HttpMethod.POST, "/manager/empresas").permitAll()
-						.requestMatchers("/manager/**").hasRole("ADMIN")
-						.requestMatchers("/cadastro/**").hasAnyRole("ADMIN", "USER")
 						.anyRequest().authenticated())
 				.addFilterBefore(authTokenFilter, UsernamePasswordAuthenticationFilter.class)
 				.build();

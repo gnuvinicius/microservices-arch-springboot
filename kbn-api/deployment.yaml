@@ -1,35 +1,35 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: auth-api
+  name: kbn-api
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: auth-api
+      app: kbn-api
   template:
     metadata:
       labels:
-        app: auth-api
+        app: kbn-api
     spec:
       containers:
-        - name: auth-api
-          image: gnuvinicius/auth-api:staging
+        - name: kbn-api
+          image: gnuvinicius/kbn-api:staging
           imagePullPolicy: Always
           resources:
             limits:
               memory: "512Mi"
               cpu: "500m"
           ports:
-            - containerPort: 8080
+            - containerPort: 8081
 ---
 kind: Service
 apiVersion: v1
 metadata:
-  name: auth-service
+  name: kbn-service
 spec:
   selector:
-    app: auth-api
+    app: kbn-api
   ports:
-    - port: 8080
+    - port: 8081
       protocol: TCP

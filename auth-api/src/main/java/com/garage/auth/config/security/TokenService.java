@@ -2,6 +2,7 @@ package com.garage.auth.config.security;
 
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
@@ -27,11 +28,16 @@ public class TokenService {
 		Usuario user = (Usuario) authenticate.getPrincipal();
 		var expirationDate = LocalDateTime.now().plusHours(2).toInstant(ZoneOffset.of("-03:00"));
 
+		String roles = user.getRoles().stream().map(x -> String.valueOf(x.getRoleName())).collect(Collectors.joining(","));
+
 		try {
 			return JWT.create()
 				.withIssuer("auth")
 				.withSubject(user.getEmail())
 				.withExpiresAt(expirationDate)
+				.withClaim("role", roles)
+				.withClaim("tenant_id", user.getTenant().getId().toString())
+				.withClaim("user_id", user.getId().toString())
 				.sign(Algorithm.HMAC256(secret));
 
 		} catch (JWTCreationException exception) {

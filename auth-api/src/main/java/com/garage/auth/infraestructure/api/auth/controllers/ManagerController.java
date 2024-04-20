@@ -22,7 +22,7 @@ import com.garage.auth.infraestructure.api.auth.dtos.UsuarioResponseDto;
 import jakarta.validation.Valid;
 
 @RestController()
-@RequestMapping("/manager")
+@RequestMapping("/auth/api/v1/manager")
 public class ManagerController {
 
 	@Autowired

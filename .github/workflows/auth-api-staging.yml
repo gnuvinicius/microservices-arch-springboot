@@ -1,9 +1,8 @@
-name: Auth-api project
-run-name: Auth-api release Staging
+name: "[HML] Auth-api project"
+#run-name: Auth-api release Staging
 on:
-  push:
-    branches:
-      - "develop"
+  workflow_dispatch: 
+
 jobs:
   maven_build:
     runs-on: ubuntu-latest

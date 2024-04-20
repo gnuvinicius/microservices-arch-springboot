@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.garage</groupId>
-	<artifactId>kbn</artifactId>
+	<artifactId>kbn-api</artifactId>
 	<version>staging</version>
 	<name>kbn</name>
 	<description>Demo project for Spring Boot</description>

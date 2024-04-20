@@ -1,9 +1,7 @@
 name: "[HML] Auth-api project"
 
 on:
-  push:
-    branches:
-      - "develop"
+  workflow_dispatch:
 
 jobs:
   maven_build:

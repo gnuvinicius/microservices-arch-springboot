@@ -1,7 +1,9 @@
 name: "[HML] Auth-api project"
-#run-name: Auth-api release Staging
+run-name: Auth-api release Staging
 on:
-  workflow_dispatch: 
+  push:
+    branches:
+      - "develop"
 
 jobs:
   maven_build:

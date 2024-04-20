@@ -44,3 +44,27 @@ jobs:
           docker build --build-arg APP_NAME=auth-api-staging --tag gnuvinicius/auth-api:staging .
           echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
           docker push gnuvinicius/auth-api:staging
+
+  dev-deploy:
+    needs: push_to_registry
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Install kubectl CLI
+        uses: azure/setup-kubectl@v3
+        with:
+          version: 'v1.26.0'
+
+      - name: Set kubeconfig file
+        uses: azure/k8s-set-context@v4
+        with:
+          method: kubeconfig
+          kubeconfig: ${{ secrets.KUBECONFIG }}
+
+      - name: Fetch kubernetes Cluster Details
+        run: |
+            kubectl version --short
+            echo --------------------------------------
+            kubectl get nodes

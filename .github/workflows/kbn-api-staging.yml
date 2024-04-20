@@ -1,6 +1,6 @@
 name: "[HML] KBN API Project"
-
-on: workflow_dispatch
+on:
+  workflow_dispatch:
 
 jobs:
   maven_build:

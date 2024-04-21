@@ -3,11 +3,11 @@ package com.garage.kbn.services.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.garage.kbn.config.RequestAttr;
 import com.garage.kbn.repository.ProjetoRepository;
 import com.garage.kbn.repository.schema.Projeto;
 import com.garage.kbn.resources.dto.ProjetoDto;
 import com.garage.kbn.services.ProjetoService;
+import com.garage.kbn.shared.JwtRequestAttributes;
 
 import jakarta.servlet.ServletContext;
 
@@ -23,7 +23,7 @@ public class ProjetoServiceImpl implements ProjetoService {
   @Override
   public Projeto cadastraProjeto(ProjetoDto dto) {
 
-    var request = (RequestAttr)servletContext.getAttribute("requestAtt");
+    var request = (JwtRequestAttributes)servletContext.getAttribute("requestAtt");
     var projeto = new Projeto(dto.getTitulo(), request.getTenantId(), request.getUserId());
 
     return repository.save(projeto);

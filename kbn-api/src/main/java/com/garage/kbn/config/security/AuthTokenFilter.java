@@ -14,7 +14,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import com.garage.kbn.config.RequestAttr;
+import com.garage.kbn.shared.JwtRequestAttributes;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletContext;
@@ -38,7 +38,7 @@ public class AuthTokenFilter extends OncePerRequestFilter  {
 
 		if (token != null) {
 			var result = tokenService.validateToken(token);
-			servletContext.setAttribute("requestAtt", new RequestAttr(result.get("tenantId"), result.get("userId")));
+			servletContext.setAttribute("requestAtt", new JwtRequestAttributes(result.get("tenantId"), result.get("userId")));
 			
 			var auth = new UsernamePasswordAuthenticationToken(result.get("email"), null, getAuthorities(result.get("role")));
 			SecurityContextHolder.getContext().setAuthentication(auth);

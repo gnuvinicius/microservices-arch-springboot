@@ -69,12 +69,6 @@ jobs:
           method: kubeconfig
           kubeconfig: ${{ secrets.KUBECONFIG }}
 
-      - name: Fetch kubernetes Cluster Details
-        run: |
-            kubectl version --short
-            echo --------------------------------------
-            kubectl get nodes
-
       - name: Save Nginx Ingress Controller IP as a GITHUB Environment Variable
         run: |
           echo "INGRESS_IP=$(kubectl -n ingress-nginx get svc ingress-nginx-controller -o jsonpath="{.status.loadBalancer.ingress[0].ip}")" >> $GITHUB_ENV
@@ -89,8 +83,10 @@ jobs:
           IMAGE: ${{ vars.DOCKERHUB_USERNAME }}/auth-api:staging
           INGRESS_IP: ${{ env.INGRESS_IP }}
       
-      - name: Check files
+      - name: Deploy in Development Environment
         run: |
-          cat auth-api/.k8s/*.yaml
+          kubectl apply -f auth-api/.k8s/deployment.yaml
+          kubectl apply -f auth-api/.k8s/service.yaml
+          kubectl apply -f auth-api/.k8s/ingress.yaml
 
 

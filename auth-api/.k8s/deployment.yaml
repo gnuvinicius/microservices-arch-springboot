@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: auth-api
-          image: gnuvinicius/auth-api:staging
+          image: _{_IMAGE_}_
           imagePullPolicy: Always
           resources:
             limits:
@@ -22,14 +22,3 @@ spec:
               cpu: "500m"
           ports:
             - containerPort: 8080
----
-kind: Service
-apiVersion: v1
-metadata:
-  name: auth-service
-spec:
-  selector:
-    app: auth-api
-  ports:
-    - port: 8080
-      protocol: TCP

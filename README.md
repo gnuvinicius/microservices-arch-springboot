@@ -40,3 +40,7 @@ kind create cluster --config kind-config.yaml
 
 ver log do ingress-nginx
 kubectl logs -n ingress-nginx -l app.kubernetes.io/name=ingress-nginx -f
+
+
+alias k8='kubectl'
+alias k8az='kubectl --kubeconfig ~/az-aks-config.conf.conf'

@@ -59,6 +59,6 @@ jobs:
         working-directory: ./auth-api
         run: |
           cp -av auth-api-${{ steps.branch_name.outputs.SOURCE_TAG }}.jar ./auth-api/
-          docker build --build-arg APP_NAME=auth-api-${{ steps.branch_name.outputs.SOURCE_TAG }} --tag gnuvinicius/auth-api:${{ steps.branch_name.outputs.SOURCE_TAG }} .
-          echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
-          docker push gnuvinicius/auth-api:${{ steps.branch_name.outputs.SOURCE_TAG }}
+          docker build --build-arg APP_NAME=auth-api-${{ steps.branch_name.outputs.SOURCE_TAG }} --tag ${{ vars.DOCKERHUB_USERNAME }}/auth-api:${{ steps.branch_name.outputs.SOURCE_TAG }} .
+          echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login -u "${{ vars.DOCKERHUB_USERNAME }}" --password-stdin
+          docker push ${{ vars.DOCKERHUB_USERNAME }}/auth-api:${{ steps.branch_name.outputs.SOURCE_TAG }}

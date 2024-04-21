@@ -1,16 +1,16 @@
-package com.garage.kbn.config;
+package com.garage.kbn.shared;
 
 import java.io.Serializable;
 
 import lombok.Getter;
 
 @Getter
-public class RequestAttr implements Serializable {
+public class JwtRequestAttributes implements Serializable {
    
   private String tenantId;
   private String userId;
 
-  public RequestAttr(String tenantId, String userId) {
+  public JwtRequestAttributes(String tenantId, String userId) {
     this.tenantId = tenantId;
     this.userId = userId;
   }

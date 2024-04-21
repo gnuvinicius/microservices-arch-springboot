@@ -41,10 +41,12 @@ jobs:
         with:
           name: auth-api
 
+      - name: Copy Artifact to Dockerfile directory
+        run: cp -av auth-api-staging.jar ./auth-api/
+
       - name: Build and push Docker image
         working-directory: ./auth-api
         run: |
-          cp -av auth-api-staging.jar ./auth-api/
           docker build --build-arg APP_NAME=auth-api-staging --tag gnuvinicius/auth-api:staging .
           echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
           docker push gnuvinicius/auth-api:staging

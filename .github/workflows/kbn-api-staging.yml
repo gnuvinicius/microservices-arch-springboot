@@ -1,8 +1,6 @@
 name: "[HML] KBN API Project"
 on:
-  push: 
-    branches: 
-      - "develop"
+  workflow_dispatch: 
 
 jobs:
   maven_build:

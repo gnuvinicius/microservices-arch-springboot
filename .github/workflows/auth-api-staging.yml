@@ -1,7 +1,9 @@
 name: "[HML] Auth-api project"
 
 on:
-  workflow_dispatch: 
+  push:
+    branches: 
+      - "develop"
 
 jobs:
   maven_build:
@@ -48,7 +50,7 @@ jobs:
         working-directory: ./auth-api
         run: |
           docker build --build-arg APP_NAME=auth-api-staging \
-            --build-arg DATABASE_HOST=${{ vars.DATABASE_HOST }} \
+            --build-arg DATABASE_HOST=${{ secrets.DATABASE_HOST }} \
             --build-arg DATABASE_PASSWORD=${{ secrets.DATABASE_PASSWORD }} --tag ${{ secrets.DOCKERHUB_USERNAME }}/auth-api:staging .
           echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
           docker push ${{ secrets.DOCKERHUB_USERNAME }}/auth-api:staging

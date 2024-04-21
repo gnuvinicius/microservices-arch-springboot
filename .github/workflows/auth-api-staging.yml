@@ -47,7 +47,9 @@ jobs:
       - name: Build and push Docker image
         working-directory: ./auth-api
         run: |
-          docker build --build-arg APP_NAME=auth-api-staging DATABASE_HOST=${{ secrets.DATABASE_HOST }} DATABASE_PASSWORD=${{ secrets.DATABASE_PASSWORD }} --tag ${{ secrets.DOCKERHUB_USERNAME }}/auth-api:staging .
+          docker build --build-arg APP_NAME=auth-api-staging \\
+            --build-arg DATABASE_HOST=${{ secrets.DATABASE_HOST }} \\
+            --build-arg DATABASE_PASSWORD=${{ secrets.DATABASE_PASSWORD }} --tag ${{ secrets.DOCKERHUB_USERNAME }}/auth-api:staging .
           echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
           docker push ${{ secrets.DOCKERHUB_USERNAME }}/auth-api:staging
 

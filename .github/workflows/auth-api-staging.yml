@@ -58,7 +58,7 @@ jobs:
 
   dev-deploy:
     needs: push_to_registry
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4

@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: auth-api
-          image: _{_IMAGE_}_
+          image: gnuvinicius/auth-api:staging
           imagePullPolicy: Always
           resources:
             limits:

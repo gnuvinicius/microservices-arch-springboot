@@ -83,14 +83,14 @@ jobs:
         with:
           tokenPrefix: '_{_'
           tokenSuffix: '_}_'
-          files: '["auth-api/.k8s/*.yaml"]'
+          files: '["auth-api/k8s/*.yaml"]'
         env:
           IMAGE: ${{ vars.DOCKERHUB_USERNAME }}/auth-api:staging
           INGRESS_IP: ${{ env.INGRESS_IP }}
       
       - name: Deploy in Development Environment
         run: |
-          kubectl delete -f auth-api/.k8s/deployment.yaml
-          kubectl create -f auth-api/.k8s/deployment.yaml
-          kubectl apply -f auth-api/.k8s/service.yaml
-          kubectl apply -f auth-api/.k8s/ingress.yaml
+          kubectl delete -f auth-api/k8s/deployment.yaml
+          kubectl create -f auth-api/k8s/deployment.yaml
+          kubectl apply -f auth-api/k8s/service.yaml
+          kubectl apply -f auth-api/k8s/ingress.yaml

@@ -34,3 +34,5 @@ build/
 
 docker-run.sh
 pom.xml.versionsBackup
+
+infra/database/dev/pgdata

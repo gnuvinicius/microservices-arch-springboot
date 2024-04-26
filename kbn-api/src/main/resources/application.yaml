@@ -16,12 +16,12 @@ spring:
     hikari:
       connection-timeout: 20000
       maximum-pool-size: 5
-    url: jdbc:postgresql://${POSTGRES_HOST}:5432/kbn_hml
+    url: jdbc:postgresql://${POSTGRES_HOST}:5432/kbn_dev
     username: ${POSTGRES_USER}
     password: ${POSTGRES_PASSWD}
   flyway:
     enabled: true
-    url: jdbc:postgresql://${POSTGRES_HOST}:5432/kbn_hml
+    url: jdbc:postgresql://${POSTGRES_HOST}:5432/kbn_dev
     password: ${POSTGRES_PASSWD}
     user: ${POSTGRES_USER}
     schemas:

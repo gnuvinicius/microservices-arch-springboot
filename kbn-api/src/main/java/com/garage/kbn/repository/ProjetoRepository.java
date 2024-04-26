@@ -4,7 +4,7 @@ import java.util.UUID;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.garage.kbn.repository.schema.Projeto;
+import com.garage.kbn.model.schema.Projeto;
 
 public interface ProjetoRepository extends JpaRepository<Projeto, UUID> {
   

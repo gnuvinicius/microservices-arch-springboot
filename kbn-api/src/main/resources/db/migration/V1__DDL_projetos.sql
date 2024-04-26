@@ -6,5 +6,6 @@ CREATE table if not exists public.tb_projetos (
     status int2 not null default 1,
     tenant_id uuid NOT NULL,
     user_id uuid not null,
-    CONSTRAINT usuario_status_check CHECK (((status >= 0) AND (status <= 1)))
+    CONSTRAINT projeto_pkey PRIMARY KEY (id),
+    CONSTRAINT projeto_status_check CHECK (((status >= 0)  AND (status <= 1)))
 );

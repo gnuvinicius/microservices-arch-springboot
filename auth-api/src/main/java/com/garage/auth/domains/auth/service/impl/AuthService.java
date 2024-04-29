@@ -4,6 +4,8 @@ import java.time.LocalDateTime;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -26,13 +28,15 @@ import com.garage.auth.infraestructure.api.auth.dtos.UserLoginRequestDto;
 @Component
 public class AuthService implements IAuthService {
 
+	private static final Logger logger = LoggerFactory.getLogger(AuthService.class);
+
 	private static final String EMPRESA_ESTA_NULO = "O campo empresa esta nulo";
 	private static final Exception TOKEN_INVALIDO = null;
 
-	private IAuthGateway authGateway;
-	private AuthenticationManager authenticationManager;
-	private TokenService tokenService;
-	private PasswordEncoder passwordEncoder;
+	private final IAuthGateway authGateway;
+	private final AuthenticationManager authenticationManager;
+	private final TokenService tokenService;
+	private final PasswordEncoder passwordEncoder;
 
 	public AuthService(IAuthGateway authGateway,
 			AuthenticationManager authenticationManager,
@@ -111,11 +115,14 @@ public class AuthService implements IAuthService {
 	}
 
 	private void enviaEmailRefreshToken(Usuario usuario) {
-		StringBuilder str = new StringBuilder();
 
-		str.append("http://localhost:4200/auth/update-password");
-		str.append(";email=" + usuario.getEmail());
-		str.append(";refreshtoken=" + usuario.getTokenRefreshPassword());
+        String str = "http://localhost:4200/auth/update-password" +
+                ";email=" +
+                usuario.getEmail() +
+                ";refreshtoken=" +
+                usuario.getTokenRefreshPassword();
+
+        logger.info("e-mail enviado com sucesso: {}", str);
 	}
 
 	private void createRefreshToken(Usuario usuario) {

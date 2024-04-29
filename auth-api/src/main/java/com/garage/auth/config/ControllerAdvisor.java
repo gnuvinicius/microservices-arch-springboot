@@ -34,13 +34,9 @@ import jakarta.validation.ConstraintViolationException;
 @Validated
 public class ControllerAdvisor extends ResponseEntityExceptionHandler {
 
-	/**
-	 *
-	 */
 	private static final String STATUS = "status";
 	private static final String MESSAGE = "message";
 	private static final String TIMESTAMP = "timestamp";
-
 	private static final Logger LOGGER_API = LoggerFactory.getLogger(ControllerAdvisor.class);
 
 	@ExceptionHandler(DataIntegrityViolationException.class)

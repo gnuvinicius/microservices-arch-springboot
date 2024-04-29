@@ -12,9 +12,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.garage.kbn.repository.schema.Projeto;
+import com.garage.kbn.model.schema.Projeto;
+import com.garage.kbn.model.services.ProjetoService;
 import com.garage.kbn.resources.dto.ProjetoDto;
-import com.garage.kbn.services.ProjetoService;
 
 import jakarta.servlet.http.HttpServletRequest;
 

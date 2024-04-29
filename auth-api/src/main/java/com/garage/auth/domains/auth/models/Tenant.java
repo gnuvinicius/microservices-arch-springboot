@@ -20,8 +20,6 @@ import lombok.NoArgsConstructor;
 @Table(name = "tenant")
 public class Tenant {
 
-	
-
 	private static final String NULO_OU_VAZIO = "o campo %s não pode ser nulo ou vazio";
 
 	@Id

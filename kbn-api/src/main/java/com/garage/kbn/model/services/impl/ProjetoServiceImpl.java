@@ -1,12 +1,12 @@
-package com.garage.kbn.services.impl;
+package com.garage.kbn.model.services.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.garage.kbn.model.schema.Projeto;
+import com.garage.kbn.model.services.ProjetoService;
 import com.garage.kbn.repository.ProjetoRepository;
-import com.garage.kbn.repository.schema.Projeto;
 import com.garage.kbn.resources.dto.ProjetoDto;
-import com.garage.kbn.services.ProjetoService;
 import com.garage.kbn.shared.JwtRequestAttributes;
 
 import jakarta.servlet.ServletContext;

@@ -35,4 +35,5 @@ build/
 docker-run.sh
 pom.xml.versionsBackup
 
+kubectl
 infra/database/dev/pgdata
